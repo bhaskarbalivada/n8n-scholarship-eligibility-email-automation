@@ -1,0 +1,211 @@
+{
+  "name": "scholarship eligibility mail automation",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Scholarship eligibility form",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "First Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Percentage",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Phone Number",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        -128
+      ],
+      "id": "42b15524-8129-4561-beeb-32c4a46184d4",
+      "name": "On form submission",
+      "webhookId": "7f1f85bb-8d8c-4427-b311-518fead1ea47"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1529d5d4-882e-4fb9-abca-6ec2917f01db",
+              "name": "Full Name",
+              "value": "={{ $json['First Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a99f54bb-81ee-41fb-abdc-252ce9d4ccfd",
+              "name": "Indian Phone Number",
+              "value": "=+91 {{ $json['Phone Number'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        -128
+      ],
+      "id": "12fe9bfa-6588-4c5f-a43d-2382477658bf",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bc4be87e-7eb1-4db8-b6b2-221171be4496",
+              "leftValue": "={{ $('On form submission').item.json.Percentage }}",
+              "rightValue": 90,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        -128
+      ],
+      "id": "2d941ad7-37ea-4ba6-909d-87e3bdbe1efe",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').item.json.Email }}",
+        "subject": "Congratulations! You are eligible.",
+        "message": "=Hello {{ $json['Full Name'] }}\nas your percentage is {{ $('On form submission').item.json.Percentage }}%\nYou are eligible.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -224
+      ],
+      "id": "ae70a1ef-161e-4bfd-b022-fcda71f1bb49",
+      "name": "Send a message",
+      "webhookId": "18d041eb-f2e5-425a-bf2b-57ab58ecfbf9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "2RzAFeOiHEvAY0B0",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').item.json.Email }}",
+        "subject": "Sorry! You are not eligible.",
+        "message": "=Hello {{ $json['Full Name'] }}\nas your percentage is {{ $('On form submission').item.json.Percentage }}%\nYou are not eligible.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -32
+      ],
+      "id": "ce0c001c-f97e-4d0c-a924-b3f4357116ac",
+      "name": "Send a message1",
+      "webhookId": "18d041eb-f2e5-425a-bf2b-57ab58ecfbf9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "2RzAFeOiHEvAY0B0",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "12367526-00ba-4edd-b64d-547aea5a9889",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ac78b16c028afdf6736202a217ad35ac390405e5f75d987c2067f8fd74970f45"
+  },
+  "nodeGroups": [],
+  "id": "1hdF124EY0xLaEvq",
+  "tags": []
+}
