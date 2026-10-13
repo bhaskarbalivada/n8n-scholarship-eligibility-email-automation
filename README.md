@@ -1,113 +1,84 @@
- # Scholarship Eligibility Email Automation
+ 🎓 Scholarship Eligibility Checker Using n8n
 
-An n8n workflow that collects a student's details through a form, checks
-whether their percentage is **greater than 90%**, and automatically
-emails the eligibility result through Gmail.
+📌 Project Overview
 
-## Workflow Overview
+The Scholarship Eligibility Checker is an automation project built using n8n. It collects student details through an online form, checks scholarship eligibility based on Class percentage, and sends an email notification to the student automatically.
 
-The workflow follows this sequence:
+🎯 Objectives
 
-**Form Submission → Edit Fields → IF Condition → Gmail Email**
+- Automate the scholarship eligibility checking process.
+- Reduce manual verification of student marks.
+- Notify students about their eligibility through email.
+- Learn workflow automation using n8n and Gmail.
 
-1.  **On form submission** --- Collects the student's first name,
-    percentage, phone number, and email address. All four fields are
-    required.
-2.  **Edit Fields** --- Renames the first name to `Full Name` and
-    formats the phone number with the `+91` country code.
-3.  **If** --- Checks whether the submitted percentage is **strictly
-    greater than 90**.
-4.  **Eligible email** --- If the condition is true, Gmail sends an
-    email with the subject **"Congratulations! You are eligible."**
-5.  **Not eligible email** --- If the condition is false, Gmail sends an
-    email with the subject **"Sorry! You are not eligible."**
+✨ Features
 
-## Eligibility Rule
+- Student registration form.
+- Collects first name and last name.
+- Collects email address and phone number.
+- Accepts percentage.
+- Automatically checks eligibility.
+- Sends an eligibility email to qualified students.
+- Sends a non-eligibility email to other students.
 
-The current IF node uses this condition:
+🛠️ Technologies Used
 
-`Percentage > 90`
+- n8n: Workflow automation platform.
+- Gmail: Sends email notifications.
+- n8n Form Trigger: Collects student information.
+- If Node: Checks the eligibility condition.
+- Edit Fields Node: Formats and organizes student details.
 
-    Submitted percentage Result
-  ---------------------- --------------------
-                     95% Eligible email
-                     90% Not eligible email
-                     75% Not eligible email
+⚙️ Workflow Process
 
-**Important:** A percentage of exactly 90 does not qualify under the
-current condition. This workflow uses a simple configured threshold; it
-does not verify all official scholarship requirements.
+1. Form Submission: The student enters their name, email, phone number, and percentage.
+2. Edit Fields: The workflow combines the student's first and last names and formats the phone number.
+3. Eligibility Check: The If node checks whether the Class X percentage is greater than 90%.
+4. Eligible Result: If the percentage is greater than 90%, Gmail sends an eligibility notification.
+5. Not Eligible Result: Otherwise, Gmail sends a non-eligibility notification.
 
-## Technologies Used
+📊 Eligibility Criteria
 
--   **n8n** --- Workflow automation
--   **n8n Form Trigger** --- Collects student information
--   **Edit Fields node** --- Formats selected form values
--   **IF node** --- Routes the workflow based on the percentage
-    condition
--   **Gmail node** --- Sends the result email
+- Percentage greater than 90%: Eligible according to this workflow's rule.
+- Percentage equal to or below 90%: Not eligible according to this workflow's rule.
 
-## Features
+Note: This is a sample eligibility rule for the project, not an official scholarship requirement.
 
--   Collects required student details through a form
--   Checks the submitted percentage automatically
--   Sends different email messages for the two outcomes
--   Uses the student's submitted email address as the recipient
--   Personalizes the email with the student's first name and percentage
--   Formats the phone number with India's `+91` country code
+🔗 Product URL
 
-## Email Examples
+- Live Demo / Scholarship Form: Add your published n8n form URL here.
+- Scholarship form: https://bhaskarbalivada.app.n8n.cloud/form/7f1f85bb-8d8c-4427-b311-518fead1ea47
+- GitHub Repository: https://github.com/bhaskarbalivada/n8n-scholarship-eligibility-email-automation
 
-### Eligible
+🚀 How to Import and Run
 
-**Subject:** Congratulations! You are eligible.
+1. Download "eligibility criteria for scholarship.json" from this repository.
+2. Open your n8n instance.
+3. Import the downloaded JSON workflow.
+4. Configure your Gmail credentials in n8n.
+5. Open the Form Trigger node and configure the form.
+6. Test the workflow using sample student details.
+7. Activate the workflow and use its production form URL when ready.
 
-The email greets the student by name, includes their submitted
-percentage, and states that they are eligible.
+🔐 Security
 
-### Not eligible
+- Never publish API keys, passwords, or access tokens.
+- Configure Gmail credentials securely in n8n.
+- Share only the public form URL, not private editor links.
+- Test the workflow before using it with real student information.
 
-**Subject:** Sorry! You are not eligible.
+📚 Learning Outcomes
 
-The email greets the student by name, includes their submitted
-percentage, and states that they are not eligible.
+- Understanding workflow automation.
+- Using form triggers and conditional logic.
+- Integrating Gmail with n8n.
+- Automating email notifications.
+- Working with JSON workflow exports.
 
-## Setup
+👨‍💻 Author
 
-1.  Import the exported workflow JSON into your n8n instance.
-2.  Check the form fields and the IF node's percentage condition.
-3.  Connect your own Gmail OAuth2 credentials to both Gmail nodes.
-4.  Confirm the recipient field uses the email submitted through the
-    form.
-5.  Test with percentages above 90 and at or below 90.
-6.  Activate or publish the workflow according to your n8n setup.
+Bhaskar Balivada
 
-## Repository Contents
+📄 License
 
--   `README.md` --- Project documentation
--   `scholarship eligibility mail automation.json` --- Exported n8n
-    workflow
--   `workflow.png` --- Workflow screenshot (optional; add the screenshot
-    file using this name)
-
-If you add the screenshot to the repository as `workflow.png`, the image
-can be displayed below:
-
-![Scholarship eligibility email automation workflow](workflow.png)
-
-## Notes
-
--   The phone number is formatted in the **Edit Fields** node, but it is
-    not currently used in either email message.
--   The workflow checks only the percentage condition configured in the
-    IF node. It does not validate income, course, institution, or other
-    scholarship-specific requirements.
--   Before sharing the exported workflow publicly, review it for
-    personal information and sensitive configuration details. Do not
-    publish credentials, access tokens, or other secrets.
-
-## Purpose
-
-This project demonstrates a practical use of workflow automation to
-collect form data, apply conditional logic, and send personalized email
-notifications without manually processing each submission.
+This project is intended for educational and learning purposes.
